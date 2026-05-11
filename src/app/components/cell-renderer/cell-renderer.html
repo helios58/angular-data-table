@@ -1,0 +1,13 @@
+<td [ngClass]="isObject(value) ? value.class : ''">
+  @if (!isObject(value)) {
+  <span>
+    {{ value }}
+  </span>
+  }
+  @if (isObject(value)) {
+  <span>
+    {{ value.text }}
+  </span>
+
+  }
+</td>

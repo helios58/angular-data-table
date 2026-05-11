@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { CellRendererComponent } from '../cell-renderer/cell-renderer';
 
 import { TableColumn } from '../../interfaces/data-table.interface';
 
@@ -14,6 +15,7 @@ import { TableColumn } from '../../interfaces/data-table.interface';
   standalone: true,
   imports: [
     CommonModule,
+    CellRendererComponent
   ],
   templateUrl: './data-table.html',
   styleUrls: ['./data-table.scss']

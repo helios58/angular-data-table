@@ -10,16 +10,23 @@ import { CARS_MOCK } from './data/cars-mock';
   styleUrl: './app.scss'
 })
 export class App {
-
+  //table column definitions with custom render function for the 'available' field
   carColumns: TableColumn<Car>[] = [
     { field: 'name', label: 'Car Name' },
     { field: 'brand', label: 'brand' },
     { field: 'color', label: 'Color' },
     { field: 'year', label: 'Year' },
     { field: 'price', label: 'Price' },
-    { field: 'available', label: 'Available'},
+    { 
+      field: 'available', 
+      label: 'Available',
+      render: (row: Car) => ({
+        text: row.available ? 'Yes' : 'No',
+        class: row.available ? 'status-available' : 'status-unavailable'
+      })
+    },
   ];
-
+  //mock car data for the table
   cars: Car[] = CARS_MOCK;
   protected readonly title = signal('angular-data-table');
 }
