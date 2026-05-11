@@ -1,0 +1,140 @@
+$color-dark: #1e293b;
+$color-body: #334155;
+$color-border: #e2e8f0;
+$color-odd-row: #f8fafc;
+$color-hover-row: #eff6ff;
+$color-empty: #94a3b8;
+$color-green: #22c55e;
+$color-red: #ef4444;
+
+.table-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  padding: 1rem;
+  width: 100%;
+}
+
+.table-scroll {
+  width: 100%;
+}
+//title styles
+.table-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: $color-dark;
+}
+//loading state styles
+.loading-state {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: $color-empty;
+}
+// empty state styles
+.empty-state-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: $color-empty;
+  background: #fafbfc;
+  border-radius: 0.5rem;
+  border: 1px solid $color-border;
+}
+// data table styles
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 700px;
+
+  th {
+    background-color: $color-dark;
+    color: #fff;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid $color-border;
+    color: $color-body;
+  }
+
+  tbody tr.odd td {
+    background-color: $color-odd-row;
+  }
+
+  tbody tr:hover td {
+    background-color: $color-hover-row;
+  }
+}
+//table responsive styles for tablets and smaller screens
+@media (max-width: 1024px) {
+  .data-table {
+    min-width: 100%;
+    font-size: 0.85rem;
+  }
+
+  .table-wrapper {
+    padding: 0.75rem;
+  }
+}
+//mobile responsive styles
+@media (max-width: 640px) {
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    min-width: 100%;
+    border: 0;
+  }
+
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid $color-border;
+    border-radius: 0.5rem;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .data-table tbody td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid $color-border;
+    color: $color-body;
+
+    min-width: 0;
+    gap: 0.75rem;
+  }
+
+  .data-table tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .data-table tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: $color-body;
+    flex: 0 0 40%;
+  }
+
+  .data-table tbody td > * {
+    flex: 1;
+    text-align: right;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

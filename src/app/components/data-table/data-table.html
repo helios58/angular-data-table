@@ -1,0 +1,63 @@
+<div class="table-wrapper">
+
+  @if (title()) {
+    <h2 class="table-title">
+      {{ title() }}
+    </h2>
+  }
+
+  @if (isLoading()) {
+    <div class="loading-state">
+      <p>Loading data...</p>
+    </div>
+  }
+
+  @if (isEmpty()) {
+    <div class="empty-state-container">
+      <p>{{ emptyMessage() }}</p>
+    </div>
+  }
+
+  @if (showTable()) {
+
+    <div class="table-scroll">
+
+      <table class="data-table">
+
+        <thead>
+          <tr>
+            @for (col of columns(); track col.field) {
+              <th>
+                {{ col.label }}
+              </th>
+            }
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for (row of data(); track $index) {
+
+            <tr [class.odd]="$index % 2 !== 0">
+
+              @for (col of columns(); track col.field) {
+
+                <td [attr.data-label]="col.label">
+                  {{ row[col.field] }}
+                </td>
+
+              }
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+</div>
