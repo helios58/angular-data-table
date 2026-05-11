@@ -1,0 +1,75 @@
+<div class="pagination">
+
+    <!-- Summary -->
+    <div class="pagination-summary">
+
+        @if (totalItems) {
+
+        <span>
+            Showing {{ startItem }}–{{ endItem }} of {{ totalItems }}
+        </span>
+
+        } @else {
+
+        <span>No items to display.</span>
+
+        }
+
+    </div>
+
+    <div class="pagination-controls">
+
+        <!-- Page size selector -->
+        <div class="pagination-selector">
+
+            <label>
+
+                Items per page
+
+                <select #sizeSelect [value]="pageSize" (change)="onPageSizeChange(sizeSelect.value)">
+
+                    @for (
+                    option of itemsPerPageOptions;
+                    track option
+                    ) {
+
+                    <option [value]="option">
+                        {{ option }}
+                    </option>
+
+                    }
+
+                </select>
+
+            </label>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="pagination-buttons">
+
+            <button type="button" [disabled]="currentPage === 1" (click)="goToPage(1)">
+                First
+            </button>
+
+            <button type="button" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                Previous
+            </button>
+
+            <span class="pagination-page-label">
+                Page {{ currentPage }} of {{ totalPages }}
+            </span>
+
+            <button type="button" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                Next
+            </button>
+
+            <button type="button" [disabled]="currentPage === totalPages" (click)="goToPage(totalPages)">
+                Last
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

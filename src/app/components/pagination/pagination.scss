@@ -1,0 +1,132 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+
+  padding: 1rem 0 0;
+  border-top: 1px solid #e2e8f0;
+
+  font-family: 'Segoe UI', sans-serif;
+  color: #334155;
+}
+
+.pagination-summary {
+  font-size: 0.95rem;
+}
+
+.pagination-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.pagination-selector label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.pagination-selector select {
+  min-width: 4.5rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.35rem;
+  background: #fff;
+  color: #334155;
+}
+
+.pagination-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pagination-buttons button {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.pagination-buttons button:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.pagination-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-page-label {
+  font-size: 0.95rem;
+  min-width: 8rem;
+}
+
+//table responsive styles for tablets and smaller screens
+@media (max-width: 1024px) {
+  .pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pagination-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pagination-page-label {
+    min-width: auto;
+  }
+}
+
+//mobile responsive styles
+@media (max-width: 640px) {
+
+  .pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pagination-summary {
+    text-align: center;
+    width: 100%;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .pagination-selector label {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .pagination-selector select {
+    width: 100%;
+  }
+
+  .pagination-buttons {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .pagination-buttons button {
+    flex: 1;
+    text-align: center;
+  }
+
+  .pagination-page-label {
+    text-align: center;
+    width: 100%;
+  }
+}

@@ -1,0 +1,17 @@
+<div class="sort-header">
+
+  <span class="label">
+    {{ label }}
+  </span>
+
+  <button class="icon-btn" type="button" (click)="onClick()">
+
+    @if (icon) {
+
+    <img [src]="icon" alt="sort icon" />
+
+    }
+
+  </button>
+
+</div>

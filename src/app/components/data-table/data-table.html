@@ -20,38 +20,48 @@
 
   @if (showTable()) {
 
-  <div class="table-scroll">
+  <table class="data-table">
 
-    <table class="data-table">
+    <thead>
+      <tr>
 
-      <thead>
-        <tr>
-          @for (col of columns(); track col.field) {
-          <th>
-            {{ col.label }}
-          </th>
-          }
-        </tr>
-      </thead>
+        @for (col of columns(); track col.field) {
+        <th>
+          <app-sort-header [label]="col.label" [active]="getSortState(col.field).field === col.field"
+            [direction]="getSortState(col.field).direction" (sort)="onSort(col.field)" />
+        </th>
+        }
 
-      <tbody>
+      </tr>
+    </thead>
 
-        @for (row of data(); track $index) {
+    <tbody>
 
-        <tr [class.odd]="$index % 2 !== 0">
+      @for (
+      row of paginatedData();
+      track $index;
+      let odd = $odd
+      ) {
 
-          @for (col of columns(); track col.field) {
+      <tr [class.odd]="odd">
 
-          <td [attr.data-label]="col.label">
-            <app-cell-renderer [row]="row" [col]="col" />
-          </td>
-          }
+        @for (col of columns(); track col.field) {
 
-        </tr>
+        <td [attr.data-label]="col.label">
+          <app-cell-renderer [row]="row" [col]="col" />
+        </td>
 
         }
-      </tbody>
-    </table>
-  </div>
+
+      </tr>
+
+      }
+
+    </tbody>
+   
+  </table>
+   <app-pagination [totalItems]="sortedData().length" [pageSize]="pageSize()" [currentPage]="page()"
+      (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)" />
   }
+
 </div>
