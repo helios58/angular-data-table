@@ -46,8 +46,9 @@ export class DataTableComponent<T extends object> {
     this.searchStore.filterData(this.data(), this.columns())
   );
 
+  // sorting is applied to the filtered data, so pagination reflects the current search results
   sortedData = computed(() =>
-    this.sortStore.sortData(this.filteredData()) // ✅ uses filteredData
+    this.sortStore.sortData(this.filteredData()) 
   );
 
   totalPages = computed(() =>
