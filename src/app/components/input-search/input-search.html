@@ -1,0 +1,22 @@
+<div class="input-search">
+
+  <div class="search-container">
+
+    <img src="/icons/search.svg" alt="Search" class="search-icon" />
+
+    <input type="text" [value]="value" [placeholder]="placeholder" (input)="onInputChange($event)"
+      class="search-input" />
+
+    @if (value) {
+
+    <button type="button" (click)="clearSearch()" class="clear-button" aria-label="Clear search">
+
+      <img src="/icons/clear.svg" alt="Clear" />
+
+    </button>
+
+    }
+
+  </div>
+
+</div>

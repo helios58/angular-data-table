@@ -19,6 +19,13 @@
   }
 
   @if (showTable()) {
+  <app-input-search [value]="searchTerm()" placeholder="Search all columns" (searchChange)="onSearchChange($event)" />
+
+  @if (noResults()) {
+  <div class="empty-state-container">
+    <p>No results found for your search.</p>
+  </div>
+  } @else {
 
   <table class="data-table">
 
@@ -58,10 +65,13 @@
       }
 
     </tbody>
-   
+
   </table>
-   <app-pagination [totalItems]="sortedData().length" [pageSize]="pageSize()" [currentPage]="page()"
-      (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)" />
+
+  <app-pagination [totalItems]="sortedData().length" [pageSize]="pageSize()" [currentPage]="page()"
+    (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)" />
+
+  }
   }
 
 </div>

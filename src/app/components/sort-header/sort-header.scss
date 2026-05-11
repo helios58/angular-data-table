@@ -2,8 +2,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
 }
-
 .label {
   user-select: none;
 }
@@ -15,4 +15,11 @@
   padding: 0;
   display: flex;
   align-items: center;
+  width: 1rem;     
+  height: 1rem;     
+  flex-shrink: 0;   
+  img {
+    width: 1rem;
+    height: 1rem;
+  }
 }

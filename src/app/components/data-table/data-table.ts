@@ -4,17 +4,19 @@ import { CommonModule } from '@angular/common';
 import { CellRendererComponent } from '../cell-renderer/cell-renderer';
 import { PaginationComponent } from '../pagination/pagination';
 import { SortHeaderComponent } from '../sort-header/sort-header';
+import { InputSearchComponent } from '../input-search/input-search';
 import { TableUtilsService } from '../../services/table-utils.service';
 import { TableColumn } from '../../interfaces/data-table.interface';
 import { SortState } from '../../interfaces/sort.interface';
 
 import { SortStore } from '../../stores/sort.store';
 import { PaginationStore } from '../../stores/pagination.store';
+import { SearchStore } from '../../stores/search.store';
 
 @Component({
   selector: 'app-data-table',
   standalone: true,
-  imports: [CommonModule, CellRendererComponent, PaginationComponent, SortHeaderComponent],
+  imports: [CommonModule, CellRendererComponent, PaginationComponent, SortHeaderComponent, InputSearchComponent],
   templateUrl: './data-table.html',
   styleUrls: ['./data-table.scss']
 })
@@ -28,17 +30,30 @@ export class DataTableComponent<T extends object> {
 
   // stores
   protected sortStore: SortStore<T>;
-  protected paginationStore = new PaginationStore();
+  protected paginationStore: PaginationStore;
+  protected searchStore: SearchStore<T>;
 
-  // sort data
-  sortedData = computed(() => this.sortStore.sortData(this.data()));
+  constructor(private utils: TableUtilsService) {
+    this.sortStore = new SortStore<T>(utils);
+    this.paginationStore = new PaginationStore();
+    this.searchStore = new SearchStore<T>(utils);
 
-  // paginate sorted data
+    effect(() => this.paginationStore.clampPage(this.totalPages()));
+  }
+
+  // chain: data → filtered → sorted → paginated
+  filteredData = computed(() =>
+    this.searchStore.filterData(this.data(), this.columns())
+  );
+
+  sortedData = computed(() =>
+    this.sortStore.sortData(this.filteredData()) // ✅ uses filteredData
+  );
+
   totalPages = computed(() =>
     Math.max(1, Math.ceil(this.sortedData().length / this.paginationStore.pageSize()))
   );
 
-  //data for current page
   paginatedData = computed(() => {
     const safePage = Math.min(this.paginationStore.page(), this.totalPages());
     const start = (safePage - 1) * this.paginationStore.pageSize();
@@ -46,22 +61,24 @@ export class DataTableComponent<T extends object> {
   });
 
   // ui state
-  isLoading  = computed(() => this.loading());
-  isEmpty    = computed(() => !this.loading() && this.data().length === 0);
-  showTable  = computed(() => !this.loading() && this.sortedData().length > 0);
+  isLoading = computed(() => this.loading());
+  isEmpty = computed(() => !this.loading() && this.data().length === 0);
+  showTable = computed(() => !this.loading() && this.data().length > 0);
+  noResults = computed(() => !this.loading() && this.data().length > 0 && this.sortedData().length === 0);
 
-  // pagination proxies (template bindings)
-  protected get page()     { return this.paginationStore.page; }
+  // template bindings
+  protected get page() { return this.paginationStore.page; }
   protected get pageSize() { return this.paginationStore.pageSize; }
+  protected get searchTerm() { return this.searchStore.searchTerm; }
 
-  constructor(private utils: TableUtilsService) {
-    this.sortStore = new SortStore<T>(utils);
-
-    effect(() => this.paginationStore.clampPage(this.totalPages()));
+  // search resets to page 1 to avoid empty page after filtering
+  protected onSearchChange(term: string): void {
+    this.searchStore.onSearchChange(term);
+    this.paginationStore.onPageChange(1);
   }
-
-  onSort(field: keyof T): void           { this.sortStore.onSort(field); }
+  //event handlers for sorting and pagination
+  onSort(field: keyof T): void { this.sortStore.onSort(field); }
   getSortState(field: keyof T): SortState<T> { return this.sortStore.getSortState(field); }
-  onPageChange(page: number): void       { this.paginationStore.onPageChange(page); }
-  onPageSizeChange(size: number): void   { this.paginationStore.onPageSizeChange(size); }
+  onPageChange(page: number): void { this.paginationStore.onPageChange(page); }
+  onPageSizeChange(size: number): void { this.paginationStore.onPageSizeChange(size); }
 }

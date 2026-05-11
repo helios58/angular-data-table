@@ -45,13 +45,14 @@ $color-red: #ef4444;
   border-collapse: collapse;
   font-size: 0.9rem;
   min-width: 700px;
-
+  table-layout: fixed;
   th {
     background-color: $color-dark;
     color: #fff;
     text-align: left;
     padding: 10px 14px;
     font-weight: 500;
+    white-space: nowrap;
   }
 
   td {
